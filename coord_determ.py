@@ -1,8 +1,12 @@
 import os
 
-import matplotlib.pyplot as plt
-import neurokit2 as nk
-import pandas as pd
+try:
+    import matplotlib.pyplot as plt
+    import neurokit2 as nk
+    import pandas as pd
+    from signal_processing import cleaning_signals
+except:
+    print("pip install poetry yaz daha sonra poetry install yaz")
 
 
 def detect_r_peaks(
@@ -175,9 +179,9 @@ def save_ecg_waves_plot(
     plt.close()
 
 
-def main():
+def all_save_png():
     # Temizlenmiş EKG sinyalinin daha önce elde edildiğini varsayıyoruz.
-    cleaned_signal = ...
+    cleaned_signal = cleaning_signals()
 
     # R tepelerini tespit et
     _, rpeaks_info = detect_r_peaks(
@@ -199,7 +203,3 @@ def main():
         waves_info,
         output_dir="output"
     )
-
-
-if __name__ == "__main__":
-    main()

@@ -1,4 +1,7 @@
-import numpy as np
+try:
+    import numpy as np
+except:
+    print("poetry install yaz")
 
 
 def calculate_rr_intervals(

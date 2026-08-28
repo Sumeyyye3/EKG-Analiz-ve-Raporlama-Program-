@@ -1,8 +1,11 @@
 import os
-import matplotlib.pyplot as plt
-import neurokit2 as nk
-import pandas as pd
 
+try:
+    import matplotlib.pyplot as plt
+    import neurokit2 as nk
+    import pandas as pd
+except:
+    print("poetry install")
 
 def cleaning_signals(
     ecg_signal: pd.Series,

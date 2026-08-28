@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV /home/sumdogan/ekg_analiz/.venv
+set -gx VIRTUAL_ENV /home/sumdogan/EKG-Analiz-ve-Raporlama-Program-/.venv
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/"bin $PATH

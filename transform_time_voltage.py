@@ -1,3 +1,6 @@
+from typing import Any, Tuple
+
+
 def read_ecg_csv(file_path: Any,pandas) -> Tuple[Any, Any]:
     df = pandas.read_csv(file_path)
     
