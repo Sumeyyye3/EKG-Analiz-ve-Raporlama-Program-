@@ -89,7 +89,6 @@ def save_ecg_waves_plot(
 
     plt.figure(figsize=(14, 6))
 
-    # Temizlenmiş EKG
     plt.plot(
         cleaned_signal,
         label="Temiz EKG Sinyali",
@@ -180,23 +179,19 @@ def save_ecg_waves_plot(
 
 
 def all_save_png():
-    # Temizlenmiş EKG sinyalinin daha önce elde edildiğini varsayıyoruz.
     cleaned_signal = cleaning_signals()
 
-    # R tepelerini tespit et
     _, rpeaks_info = detect_r_peaks(
         cleaned_signal,
         sampling_rate=1000
     )
 
-    # P-Q-S-T noktalarını tespit et
     _, waves_info = detect_ecg_waves(
         cleaned_signal,
         rpeaks_info,
         sampling_rate=1000
     )
 
-    # Grafiği oluştur ve kaydet
     save_ecg_waves_plot(
         cleaned_signal,
         rpeaks_info,
