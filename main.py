@@ -33,32 +33,38 @@ def main():
         sys.exit(1)
 
     print("\n" + "="*60)
-    print("🫀 EKG ANALİZ VE ARİTMİ İKAZ SİSTEMİ BAŞLATILIYOR...")
+    print("EKG ANALİZ VE ARİTMİ İKAZ SİSTEMİ BAŞLATILIYOR...")
     print("="*60)
 
     print(f"\n[1/5] 📂 Veri dosyası okunuyor: {args.file_path}")
-    ecg_signal = read_ecg_data(args.file_path)
-    print(f"      -> Toplam {len(ecg_signal)} örnek (sample) yüklendi.")
+    _, voltage = read_ecg_data(args.file_path)
+    print(f"      -> Toplam {len(voltage)} örnek (sample) yüklendi.")
+
+    # .dat (WFDB) dosyaları kendi örnekleme hızını .hea header'ından taşır.
+    # Bulunursa onu kullan (daha güvenilir); yoksa -sr argümanına düş.
+    sampling_rate = getattr(voltage, "attrs", {}).get("sampling_rate", args.sampling_rate)
+    if sampling_rate != args.sampling_rate:
+        print(f"      -> Dosyadan algılanan örnekleme hızı kullanılacak: {sampling_rate} Hz")
 
     print("\n[2/5] 🧹 Sinyal gürültüden arındırılıyor (Bandpass Filtreleme)...")
     cleaned_signal = cleaning_signals(
-        ecg_signal=ecg_signal, 
-        sampling_rate=args.sampling_rate
+        ecg_signal=voltage,
+        sampling_rate=sampling_rate
     )
     print("      -> Grafik kaydedildi: output/filtered_signal_split.png")
 
     print("\n[3/5] 📍 R Tepeleri ve P-QRS-T Noktaları tespit ediliyor...")
-    all_save_png()
+    all_save_png(cleaned_signal, sampling_rate=sampling_rate)
     print("      -> Grafik kaydedildi: output/waves_detected.png")
     _, rpeaks_info = detect_r_peaks(
-            cleaned_signal, sampling_rate=args.sampling_rate
+            cleaned_signal, sampling_rate=sampling_rate
         )
     # STEP 4: Kural Tabanlı Metrik Analizi ve Uyarı Motoru
     print("\n[4/5] 📊 Sağlık metrikleri ve Aritmi analizi hesaplanıyor...")
     r_peaks = rpeaks_info.get("ECG_R_Peaks", [])
     analysis_results = analyze_ecg_metrics(
         r_peaks=r_peaks, 
-        sampling_rate=args.sampling_rate
+        sampling_rate=sampling_rate
     )
 
     print("\n" + "-"*40)

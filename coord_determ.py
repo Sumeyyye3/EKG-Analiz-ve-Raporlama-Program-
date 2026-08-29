@@ -179,18 +179,16 @@ def save_ecg_waves_plot(
     plt.close()
 
 
-def all_save_png():
-    cleaned_signal = cleaning_signals()
-
+def all_save_png(cleaned_signal, sampling_rate: int = 1000):
     _, rpeaks_info = detect_r_peaks(
         cleaned_signal,
-        sampling_rate=1000
+        sampling_rate=sampling_rate
     )
 
     _, waves_info = detect_ecg_waves(
         cleaned_signal,
         rpeaks_info,
-        sampling_rate=1000
+        sampling_rate=sampling_rate
     )
 
     save_ecg_waves_plot(
