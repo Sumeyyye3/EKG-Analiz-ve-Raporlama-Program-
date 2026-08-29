@@ -4,8 +4,10 @@ try:
     import matplotlib.pyplot as plt
     import neurokit2 as nk
     import pandas as pd
-except:
-    print("poetry install")
+except ModuleNotFoundError as e:
+    print(e)
+    print("Bu nedenle poetry install komutuyla bağımlılıkları indir")
+    exit(1)
 
 def cleaning_signals(
     ecg_signal: pd.Series,

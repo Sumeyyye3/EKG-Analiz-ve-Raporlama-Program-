@@ -5,9 +5,10 @@ try:
     import neurokit2 as nk
     import pandas as pd
     from signal_processing import cleaning_signals
-except:
-    print("pip install poetry yaz daha sonra poetry install yaz")
-
+except ModuleNotFoundError as e:
+    print(e)
+    print("Bu nedenle poetry install komutuyla bağımlılıkları indir")
+    exit(1)
 
 def detect_r_peaks(
     cleaned_signal: pd.Series,

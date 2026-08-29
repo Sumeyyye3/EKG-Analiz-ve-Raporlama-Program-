@@ -4,8 +4,10 @@ try:
     from typing import Dict, Any
     from google import genai
     from google.genai import types
-except:
-    print("poetry install yaz")
+except ModuleNotFoundError as e:
+    print(e)
+    print("Bu nedenle poetry install komutuyla bağımlılıkları indir")
+    exit(1)
 
 def generate_ecg_report(analysis_results: Dict[str, Any]) -> str:
     api_key = os.getenv("GEMINI_API_KEY")

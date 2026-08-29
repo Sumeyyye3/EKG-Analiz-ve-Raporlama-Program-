@@ -1,7 +1,9 @@
 try:
     import numpy as np
-except:
-    print("poetry install yaz")
+except ModuleNotFoundError as e:
+    print(e)
+    print("Bu nedenle poetry install komutuyla bağımlılıkları indir")
+    exit(1)
 
 
 def calculate_rr_intervals(
