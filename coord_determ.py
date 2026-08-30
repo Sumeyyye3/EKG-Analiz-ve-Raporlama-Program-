@@ -4,7 +4,6 @@ try:
     import matplotlib.pyplot as plt
     import neurokit2 as nk
     import pandas as pd
-    from signal_processing import cleaning_signals
 except ModuleNotFoundError as e:
     print(e)
     print("Bu nedenle poetry install komutuyla bağımlılıkları indir")
@@ -179,7 +178,17 @@ def save_ecg_waves_plot(
     plt.close()
 
 
-def all_save_png(cleaned_signal, sampling_rate: int = 1000):
+def all_save_png(
+    cleaned_signal: pd.Series,
+    sampling_rate: int = 1000,
+    output_dir: str = "output"
+) -> tuple[dict, dict]:
+    """R/P/Q/S/T tespiti yapar, grafiği kaydeder ve sonuçları döndürür.
+
+    rpeaks_info ve waves_info döndürülür ki çağıran taraf (main.py)
+    aynı hesaplamayı (detect_r_peaks) tekrar yapmak zorunda kalmasın.
+    """
+
     _, rpeaks_info = detect_r_peaks(
         cleaned_signal,
         sampling_rate=sampling_rate
@@ -195,5 +204,7 @@ def all_save_png(cleaned_signal, sampling_rate: int = 1000):
         cleaned_signal,
         rpeaks_info,
         waves_info,
-        output_dir="output"
+        output_dir=output_dir
     )
+
+    return rpeaks_info, waves_info
