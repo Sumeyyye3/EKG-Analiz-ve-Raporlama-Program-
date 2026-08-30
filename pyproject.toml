@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "ekg-analiz"
+version = "0.1.0"
+description = "Akıllı EKG Analiz ve Aritmi İkaz Paneli"
+authors = ["Sümeyye Doğan"]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.13"
+pandas = "^2.1.0"
+neurokit2 = "^0.2.7"
+wfdb = "^4.1.2"
+matplotlib = "^3.8.0"
+streamlit = "^1.30.0"
+google-genai = "^1.0.0"
+python-dotenv = "^1.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
