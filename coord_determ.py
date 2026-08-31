@@ -97,7 +97,6 @@ def save_ecg_waves_plot(
         linewidth=1.2
     )
 
-    # R tepeleri
     plt.scatter(
         r_peaks,
         cleaned_signal.iloc[r_peaks],
@@ -108,7 +107,6 @@ def save_ecg_waves_plot(
         zorder=5
     )
 
-    # P tepeleri
     if p_peaks:
         plt.scatter(
             p_peaks,
@@ -120,7 +118,6 @@ def save_ecg_waves_plot(
             zorder=4
         )
 
-    # Q tepeleri
     if q_peaks:
         plt.scatter(
             q_peaks,
@@ -132,7 +129,6 @@ def save_ecg_waves_plot(
             alpha=0.7
         )
 
-    # S tepeleri
     if s_peaks:
         plt.scatter(
             s_peaks,
@@ -144,7 +140,6 @@ def save_ecg_waves_plot(
             alpha=0.7
         )
 
-    # T tepeleri
     if t_peaks:
         plt.scatter(
             t_peaks,
@@ -178,17 +173,11 @@ def save_ecg_waves_plot(
     plt.close()
 
 
-def all_save_png(
+def peaks_save_png(
     cleaned_signal: pd.Series,
     sampling_rate: int = 1000,
     output_dir: str = "output"
 ) -> tuple[dict, dict]:
-    """R/P/Q/S/T tespiti yapar, grafiği kaydeder ve sonuçları döndürür.
-
-    rpeaks_info ve waves_info döndürülür ki çağıran taraf (main.py)
-    aynı hesaplamayı (detect_r_peaks) tekrar yapmak zorunda kalmasın.
-    """
-
     _, rpeaks_info = detect_r_peaks(
         cleaned_signal,
         sampling_rate=sampling_rate

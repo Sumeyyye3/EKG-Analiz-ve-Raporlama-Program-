@@ -19,13 +19,10 @@ def cleaning_signals(
         ecg_signal,
         sampling_rate=sampling_rate
     )
-
-    # nk.ecg_clean girdi tipinden bağımsız olarak numpy array döndürür;
-    # coord_determ.py .iloc ile indeksleme yaptığı için pandas Series'e çeviriyoruz.
     return pd.Series(cleaned_signal)
 
 
-def save_ecg_comparison_plot(
+def save_ecg(
     ecg_signal: pd.Series,
     cleaned_signal: pd.Series,
     output_dir: str = "output"

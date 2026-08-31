@@ -11,10 +11,8 @@ except ModuleNotFoundError as e:
 
 try:
     from dotenv import load_dotenv
-    load_dotenv()  # proje klasöründeki .env dosyasını okuyup ortam değişkenlerine yükler
+    load_dotenv()
 except ModuleNotFoundError:
-    # dotenv kurulu değilse sessizce geç; kullanıcı yine de
-    # export GEMINI_API_KEY=... ile ortam değişkenini elle tanımlayabilir.
     pass
 
 def generate_ecg_report(analysis_results: Dict[str, Any]) -> str:
@@ -61,7 +59,7 @@ def generate_ecg_report(analysis_results: Dict[str, Any]) -> str:
             model="gemini-3.6-flash",
             contents=prompt,
             config=types.GenerateContentConfig(
-                temperature=0.3, # Tıbbi tutarlılık için düşük yaratıcılık
+                temperature=0.3,
             )
         )
         

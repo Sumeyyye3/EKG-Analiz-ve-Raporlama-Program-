@@ -58,21 +58,21 @@ def detect_alerts(
     # Taşikardi
     if mean_bpm > 100:
         alerts.append(
-            "⚠️ Taşikardi Riski (Yüksek Kalp Atım Hızı)"
+            "Taşikardi Riski (Yüksek Kalp Atım Hızı)"
         )
         status = "Taşikardi Tespiti"
 
     # Bradikardi
     elif mean_bpm < 60:
         alerts.append(
-            "⚠️ Bradikardi Riski (Düşük Kalp Atım Hızı)"
+            "Bradikardi Riski (Düşük Kalp Atım Hızı)"
         )
         status = "Bradikardi Tespiti"
 
     # Düzensiz ritim
     if rr_variance_pct > 12.0:
         alerts.append(
-            "⚠️ Düzensiz Ritim "
+            "Düzensiz Ritim "
             "(Aritmi Riski - R-R Değişkenliği Yüksek)"
         )
 
@@ -81,7 +81,7 @@ def detect_alerts(
 
     if not alerts:
         alerts.append(
-            "✅ Sinyal Değerleri Normal Aralıkta"
+            "Sinyal Değerleri Normal Aralıkta"
         )
 
     return status, alerts
@@ -100,28 +100,22 @@ def analyze_ecg_metrics(
                 "Analiz için en az 2 R-tepesi gereklidir."
             )
         }
-
-    # R-R hesapla
     rr_intervals = calculate_rr_intervals(
         r_peaks,
         sampling_rate
     )
 
-    # BPM hesapla
     bpm_results = calculate_bpm(rr_intervals)
 
-    # R-R varyansı hesapla
     rr_variance_pct = calculate_rr_variance(
         rr_intervals
     )
 
-    # İkazları oluştur
     status, alerts = detect_alerts(
         bpm_results["mean_bpm"],
         rr_variance_pct
     )
 
-    # Sonuçları birleştir
     return {
         "mean_bpm": bpm_results["mean_bpm"],
         "min_bpm": bpm_results["min_bpm"],
